@@ -296,6 +296,28 @@ class GitInitCommand(GitInit, GitWindowCommand):
             return False
 
 
+class GitRebaseBranchCommand(GitWindowCommand):
+    def run(self):
+        self.run_command(['git', 'branch', '--no-color'], self.fetch_branch)
+
+    def fetch_branch(self, result):
+        self.results = result.rstrip().split('\n')
+        self.quick_panel(self.results, self.panel_done)
+
+    def panel_done(self, picked):
+        if 0 > picked < len(self.results):
+            return
+        picked_branch = self.results[picked]
+        picked_branch = picked_branch.strip()
+        self.rebase_done(picked_branch)
+    
+    def rebase_done(self, ref):
+        self.run_command(['git', 'rebase', 'i', ref], self.show_rebase)
+
+    def show_rebase(self, result):
+        self.scratch(result, title="Git Rebase Details", syntax=plugin_file("Git Commit Message.tmLanguage"))
+
+
 class GitBlameCommand(GitTextCommand):
     def run(self, edit):
         # somewhat custom blame command:
@@ -847,36 +869,6 @@ class GitNewBranchCommand(GitWindowCommand):
             self.panel("No branch name provided")
             return
         self.run_command(['git', 'checkout', '-b', branchname])
-
-
-class GitNewTagCommand(GitWindowCommand):
-    def run(self):
-        self.get_window().show_input_panel("Tag name", "", self.on_input, None, None)
-
-    def on_input(self, tagname):
-        if not tagname.strip():
-            self.panel("No branch name provided")
-            return
-        self.run_command(['git', 'tag', tagname])
-
-class GitShowTagsCommand(GitWindowCommand):
-    def run(self):
-        self.run_command(['git', 'tag'], self.fetch_tag)
-
-    def fetch_tag(self, result):
-        self.results = result.rstrip().split('\n')
-        self.quick_panel(self.results, self.panel_done)
-
-    def panel_done(self, picked):
-        if 0 > picked < len(self.results):
-            return
-        picked_tag = self.results[picked]
-        picked_tag = picked_tag.strip()
-        self.run_command(['git', 'show', picked_tag])
-
-class GitPushTagsCommand(GitWindowCommand):
-    def run(self):
-        self.run_command(['git', 'push', '--tags'])
 
 
 class GitCheckoutCommand(GitTextCommand):
