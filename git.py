@@ -298,6 +298,28 @@ class GitInitCommand(GitInit, GitWindowCommand):
         else:
             return False
 
+class GitRebaseBranchCommand(GitWindowCommand):
+    def run(self):
+        self.run_command(['git', 'branch', '--no-color'], self.fetch_branch)
+
+    def fetch_branch(self, result):
+        self.results = result.rstrip().split('\n')
+        self.quick_panel(self.results, self.panel_done)
+
+    def panel_done(self, picked):
+        if 0 > picked < len(self.results):
+            return
+        picked_branch = self.results[picked]
+        picked_branch = picked_branch.strip()
+        self.rebase_done(picked_branch)
+    
+    def rebase_done(self, ref):
+        self.run_command(['git', 'rebase', '-i', ref], self.show_rebase)
+
+    def show_rebase(self, result):
+        self.scratch(result, title="Git Rebase Details", syntax=plugin_file("Git Commit Message.tmLanguage"))
+
+
 
 class GitBlameCommand(GitTextCommand):
     def run(self, edit):
