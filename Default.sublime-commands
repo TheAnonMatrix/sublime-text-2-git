@@ -3,6 +3,10 @@
         "command": "git_init"
     }
     ,{
+        "caption": "Git: Rebase Branch",
+        "command": "git_rebase_branch"
+    }
+    ,{
         "caption": "Git: Blame",
         "command": "git_blame"
     }
