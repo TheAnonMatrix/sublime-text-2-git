@@ -307,15 +307,17 @@ class GitRebaseBranchCommand(GitWindowCommand):
         if 0 > picked < len(self.results):
             return
         picked_branch = self.results[picked]
-        picked_branch = picked_branch.strip()
+        picked_branch = picked_branch.strip("* ")
         self.rebase_done(picked_branch)
     
     def rebase_done(self, ref):
         self.run_command(['git', 'rebase', '-i', ref], self.show_rebase)
 
     def show_rebase(self, result):
-        self.scratch(result, title="Git Rebase Details", syntax=plugin_file("Git Commit Message.tmLanguage"))
-
+        if not 'Cannot rebase' in result or not 'fatal' in result:
+            self.scratch(result, title="Git Rebase Details", syntax=plugin_file("Git Commit Message.tmLanguage"))
+        else:
+            sublime.status_message(result)
 
 
 class GitBlameCommand(GitTextCommand):
