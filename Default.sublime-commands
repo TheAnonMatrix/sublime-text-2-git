@@ -7,7 +7,6 @@
         "command": "git_rebase_branch"
     }
     ,{
-    {
         "caption": "Git: Blame",
         "command": "git_blame"
     }
