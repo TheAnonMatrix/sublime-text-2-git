@@ -40,6 +40,7 @@
                             ,{ "caption": "Diff", "command": "git_diff_all" }
                             ,{ "caption": "Diff Staged", "command": "git_diff_commit" }
                             ,{ "caption": "Diff Tool", "command": "git_diff_tool" }
+<<<<<<< HEAD
                             ,{ "caption": "Reset Hard", "command": "git_reset_hard_head" }
                             ,{ "caption": "-" }
                             ,{ "caption": "Add...", "command": "git_add_choice" }
@@ -48,6 +49,11 @@
                             ,{ "caption": "-" }
                             ,{ "caption": "Commit", "command": "git_commit" }
                             ,{ "caption": "Amend Last Commit", "command": "git_commit_amend" }
+=======
+                            ,{ "caption": "-" }
+                            ,{ "caption": "Add...", "command": "git_add_choice" }
+                            ,{ "caption": "Commit", "command": "git_commit" }
+>>>>>>> 7ad79b0... Added Delete opion
                             ,{ "caption": "-" }
                             ,{ "caption": "Open...", "command": "git_open_file" }
                         ]
@@ -63,6 +69,7 @@
                         ]
                     }
                     ,{ "caption": "-" }
+<<<<<<< HEAD
                     ,{
                         "caption": "Flow",
                         "children":
@@ -83,6 +90,11 @@
                     ,{ "caption": "Branches...", "command": "git_branch" }
                     ,{ "caption": "Merge...", "command": "git_merge" }
                     ,{ "caption": "See commit history...", "command": "git_commit_history"}
+=======
+                    ,{ "caption": "Status...", "command": "git_status" }
+                    ,{ "caption": "Branches...", "command": "git_branch" }
+                    ,{ "caption": "Merge...", "command": "git_merge" }
+>>>>>>> 7ad79b0... Added Delete opion
                 ]
             }
         ]
